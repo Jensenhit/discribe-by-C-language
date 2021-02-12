@@ -1,0 +1,8 @@
+/*
+calculate string
+*/
+
+#include
+
+
+

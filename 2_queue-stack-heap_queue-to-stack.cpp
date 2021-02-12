@@ -1,0 +1,8 @@
+/*
+queue to stack
+*/
+
+#include
+
+
+
