@@ -1,6 +1,6 @@
 /*
 dynamic programming
-triangle
+minimum path sum
 */
 
 #include <iostream>
@@ -9,39 +9,35 @@ using namespace std;
 
 class Solution{
 public:
-    int minimumTotal(vector<vector<int>>& triangle){
-        if (triangle.size() == 0){
-            return 0;
+    int minPathSum(vector<vector<int>>& grid){
+        if (grid.size() == 0) return 0;
+        int row = grid.size();
+        int column = grid[0].size();
+        vector<vector<int>> dp(row, vector<int>(column, 0));
+        dp[0][0] = grid[0][0];
+        for (int i = 1; i < column; i++){
+            dp[0][i] = dp[0][i-1] + grid[0][i];
         }
-        vector<vector<int>> dp;
-        for (int i = 0; i < triangle.size(); i++){
-            dp.push_back(vector<int>());
-            for (int j = 0; j < triangle.size(); j++){
-                dp[i].push_back(0);
+        for (int i = 1; i < row; i++){
+            dp[i][0] = dp[i-1][0] + grid[i][0];
+            for (int j = 1; j < column; j++){
+                dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j];
             }
         }
-        for (int i = 0; i < dp.size(); i++){
-            dp[dp.size()-1][i] = triangle[dp.size()-1][i];
-        }
-        for (int i = dp.size()-2; i >= 0; i--){
-            for (int j = 0; j < dp[i].size(); j++){
-                dp[i][j] = min(dp[i+1][j], dp[i+1][j+1]) + triangle[i][j];
-            }
-        }
-        return dp[0][0];
+        return dp[row-1][column-1];
     }
 };
 
 int main(){
-    vector<vector<int>> triange;
-    int test[][10] = {{2},{3,4},{6,5,7},{4,1,8,3}};
-    for (int i = 0; i < 4; i++){
-        triange.push_back(vector<int>());
-        for (int j = 0; j < i + 1; j++){
-            triange[i].push_back(test[i][j]);
+    int test[][3] = {{1,3,1},{1,5,1},{4,2,1}};
+    vector<vector<int>> grid;
+    for (int i = 0; i < 3; i++){
+        grid.push_back(vector<int>());
+        for (int j = 0; j < 3; j++){
+            grid[i].push_back(test[i][j]);
         }
     }
     Solution solve;
-    cout<<solve.minimumTotal(triange)<<endl;
+    cout<<solve.minPathSum(grid)<<endl;
     return 0;
 }
