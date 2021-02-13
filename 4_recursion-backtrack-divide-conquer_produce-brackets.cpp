@@ -3,7 +3,38 @@ recursion, backtracking, divide and conquer
 produce brackets by recursion
 */
 
-#include
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
 
+class Solution{
+public:
+    vector<string> generateParenthesis(int n){
+        vector<string> result;
+        generate("", n, n, result);
+        return result;
+    }
+private:
+    void generate(string item, int left, int right, vector<string> &result){
+        if (left == 0 && right ==0){
+            result.push_back(item);
+            return;
+        }
+        if (left > 0){
+            generate(item + '(', left-1, right, result);
+        }
+        if (left < right){
+            generate(item + ')', left, right-1, result);
+        }
+    }
+};
 
-
+int main(){
+    Solution solve;
+    vector<string> result = solve.generateParenthesis(3);
+    for (int i = 0; i < result.size(); i++){
+        cout<<result[i].c_str()<<endl;
+    }
+    return 0;
+}
