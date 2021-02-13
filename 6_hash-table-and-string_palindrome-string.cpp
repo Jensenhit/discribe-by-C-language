@@ -4,6 +4,7 @@ find longest palindrome string
 */
 
 #include <iostream>
+#include <string>
 using namespace std;
 
 class Solution{
